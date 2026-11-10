@@ -3,267 +3,183 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>STUDYON | AI 맞춤 학습</title>
 <style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
-  color: #202b3c;
-}
-header {
-  background: white;
-  padding: 20px 7%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #e8edf3;
-}
-.logo { font-size: 25px; font-weight: 800; color: #2864e8; }
-nav a { margin-left: 20px; text-decoration: none; color: #536174; }
-main { max-width: 950px; margin: 45px auto; padding: 20px; }
-.hero { text-align: center; margin-bottom: 35px; }
-.hero h1 { font-size: 34px; }
-.hero p { color: #69778a; line-height: 1.7; }
-.panel {
-  background: white;
-  border-radius: 18px;
-  padding: 30px;
-  box-shadow: 0 5px 25px #2030500b;
-  margin-bottom: 22px;
-}
-label { display: block; font-weight: bold; margin: 18px 0 8px; }
-select, input[type="text"] {
-  width: 100%; padding: 14px;
-  border: 1px solid #dce3ed;
-  border-radius: 9px; font-size: 15px;
-}
-.upload {
-  border: 2px dashed #9bb7ee;
-  border-radius: 14px;
-  padding: 35px 15px;
-  text-align: center;
-  background: #f7faff;
-  margin-top: 10px;
-}
-.upload input { margin-top: 18px; max-width: 100%; }
-.hint { color: #77859a; font-size: 13px; }
-.file-list { margin-top: 18px; }
-.file-item {
-  display: flex; justify-content: space-between;
-  align-items: center; gap: 10px;
-  padding: 12px; margin-top: 8px;
-  background: #f3f6fa; border-radius: 9px;
-  overflow-wrap: anywhere;
-}
-.file-name { font-size: 14px; }
-.remove {
-  border: 0; background: #ffe9e9;
-  color: #d33; padding: 7px 11px;
-  border-radius: 7px; cursor: pointer;
-}
-.primary {
-  width: 100%; padding: 16px;
-  background: #2864e8; color: white;
-  border: 0; border-radius: 10px;
-  font-size: 17px; font-weight: bold;
-  cursor: pointer; margin-top: 22px;
-}
-.primary:hover { background: #174fc9; }
-.features {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 15px; margin-top: 25px;
-}
-.feature {
-  background: white; padding: 22px;
-  border-radius: 14px; text-align: center;
-}
-.feature p { color: #77859a; font-size: 14px; }
-#result {
-  margin-top: 18px; padding: 15px;
-  background: #edf4ff; border-radius: 10px;
-  display: none; line-height: 1.7;
-}
-footer { text-align: center; padding: 35px; color: #8994a5; }
-@media(max-width:650px) {
-  .features { grid-template-columns: 1fr; }
-  header { padding: 18px; }
-  nav { display: none; }
-  .hero h1 { font-size: 27px; }
-  .panel { padding: 20px; }
-}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f7fb;color:#202b3c;font-family:Arial,sans-serif}
+header{background:white;padding:20px 7%;border-bottom:1px solid #eee}
+.logo{font-size:25px;font-weight:bold;color:#2864e8}
+main{max-width:850px;margin:40px auto;padding:20px}
+.hero{text-align:center;margin-bottom:30px}
+.panel{background:white;padding:28px;border-radius:16px;box-shadow:0 5px 25px #0000000a}
+label{display:block;font-weight:bold;margin:18px 0 8px}
+select,input[type=text]{width:100%;padding:13px;border:1px solid #dce3ed;border-radius:8px;font-size:15px}
+.upload{border:2px dashed #8eafea;background:#f6f9ff;padding:30px 15px;text-align:center;border-radius:13px;margin-top:10px}
+.upload button{background:#2864e8;color:white;border:0;border-radius:8px;padding:13px 20px;font-size:15px;cursor:pointer}
+.hint{font-size:13px;color:#78869a}
+.file-item{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#f1f5fa;padding:12px;margin-top:8px;border-radius:8px}
+.file-name{overflow-wrap:anywhere;font-size:14px}
+.remove{border:0;background:#ffe5e5;color:#c33;padding:8px 12px;border-radius:6px;cursor:pointer;flex-shrink:0}
+.primary{width:100%;padding:16px;background:#2864e8;color:white;border:0;border-radius:9px;font-size:17px;font-weight:bold;margin-top:22px;cursor:pointer}
+#result{display:none;background:#edf4ff;padding:16px;border-radius:10px;margin-top:18px;line-height:1.7}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.feature{background:white;padding:18px;border-radius:12px;text-align:center}
+@media(max-width:600px){.features{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo">STUDYON</div>
-  <nav>
-    <a href="#home">홈</a>
-    <a href="#analysis">학습 분석</a>
-    <a href="#features">서비스 소개</a>
-  </nav>
-</header>
+<header><div class="logo">STUDYON</div></header>
 
-<main id="home">
-  <section class="hero">
-    <h1>나만의 AI 학습 파트너</h1>
-    <p>시험지를 업로드하면 학습 자료를 정리하고<br>
-    나에게 필요한 공부 방향을 찾아가는 공간</p>
-  </section>
+<main>
+<section class="hero">
+<h1>나만의 AI 학습 파트너</h1>
+<p>시험지를 업로드하고 나에게 맞는 학습 방향을 찾아보자.</p>
+</section>
 
-  <section class="panel" id="analysis">
-    <h2>시험지 업로드</h2>
-    <p class="hint">학년과 과목을 선택하고 시험지 파일을 올려줘.</p>
+<section class="panel">
+<h2>시험지 업로드</h2>
 
-    <label for="grade">학년</label>
-    <select id="grade">
-      <option value="">학년 선택</option>
-      <option>초등학교 6학년</option>
-      <option>중학교 1학년</option>
-      <option>중학교 2학년</option>
-      <option>중학교 3학년</option>
-      <option>고등학교 1학년</option>
-      <option>고등학교 2학년</option>
-      <option>고등학교 3학년</option>
-    </select>
+<label for="grade">학년</label>
+<select id="grade">
+<option value="">학년 선택</option>
+<option>초등학교 6학년</option>
+<option>중학교 1학년</option>
+<option>중학교 2학년</option>
+<option>중학교 3학년</option>
+<option>고등학교 1학년</option>
+<option>고등학교 2학년</option>
+<option>고등학교 3학년</option>
+</select>
 
-    <label for="subject">과목</label>
-    <select id="subject">
-      <option value="">과목 선택</option>
-      <option>국어</option>
-      <option>수학</option>
-      <option>영어</option>
-      <option>과학</option>
-      <option>사회</option>
-      <option>역사</option>
-    </select>
+<label for="subject">과목</label>
+<select id="subject">
+<option value="">과목 선택</option>
+<option>국어</option><option>수학</option>
+<option>영어</option><option>과학</option>
+<option>사회</option><option>역사</option>
+</select>
 
-    <label for="scope">시험 범위 (선택)</label>
-    <input type="text" id="scope" placeholder="예: 2단원, 일차방정식">
+<label for="scope">시험 범위 (선택)</label>
+<input type="text" id="scope" placeholder="예: 2단원, 일차방정식">
 
-    <label>시험지 파일</label>
-    <div class="upload">
-      <div style="font-size:35px;">📁</div>
-      <strong>여러 장의 사진과 PDF를 선택할 수 있어!</strong>
-      <p class="hint">JPG, PNG, PDF 지원 · 파일당 최대 15MB</p>
-      <input type="file" id="fileInput"
-        accept=".jpg,.jpeg,.png,.pdf" multiple>
-    </div>
+<label>시험지 파일</label>
+<div class="upload">
+<p style="font-size:35px;margin:0">📁</p>
+<strong>사진과 PDF를 여러 개 추가할 수 있어!</strong>
+<p class="hint">JPG · PNG · PDF / 파일당 최대 15MB</p>
+<button type="button" id="addFiles">파일 추가하기</button>
+<input type="file" id="fileInput" accept="image/jpeg,image/png,application/pdf,.jpg,.jpeg,.png,.pdf" multiple hidden>
+</div>
 
-    <div class="file-list" id="fileList"></div>
+<div id="fileList"></div>
 
-    <button class="primary" id="analyzeBtn">
-      AI 학습 분석 시작
-    </button>
-    <div id="result"></div>
-  </section>
+<button type="button" id="clearFiles" class="remove" style="margin-top:12px">전체 삭제</button>
 
-  <section id="features" class="features">
-    <div class="feature">
-      <h3>📊 취약점 분석</h3>
-      <p>부족한 학습 영역을 파악하는 기능</p>
-    </div>
-    <div class="feature">
-      <h3>📝 맞춤 문제</h3>
-      <p>학습 수준에 맞는 문제 생성 기능</p>
-    </div>
-    <div class="feature">
-      <h3>📈 학습 기록</h3>
-      <p>학습 과정과 결과를 관리하는 기능</p>
-    </div>
-  </section>
+<button type="button" id="analyzeBtn" class="primary">AI 학습 분석 시작</button>
+<div id="result"></div>
+</section>
+
+<section class="features">
+<div class="feature"><h3>📊 취약점 분석</h3><p>부족한 학습 영역 파악</p></div>
+<div class="feature"><h3>📝 맞춤 문제</h3><p>나에게 맞는 문제 생성</p></div>
+<div class="feature"><h3>📈 학습 기록</h3><p>학습 과정 관리</p></div>
+</section>
 </main>
 
-<footer>STUDYON · AI Personalized Learning</footer>
-
 <script>
-const fileInput = document.getElementById("fileInput");
-const fileList = document.getElementById("fileList");
-const result = document.getElementById("result");
-let selectedFiles = [];
+const input=document.getElementById("fileInput");
+const addButton=document.getElementById("addFiles");
+const list=document.getElementById("fileList");
+const result=document.getElementById("result");
 
-fileInput.addEventListener("change", function() {
-  const incoming = Array.from(this.files);
-  const allowed = ["image/jpeg", "image/png", "application/pdf"];
+let files=[];
 
-  for (const file of incoming) {
-    if (!allowed.includes(file.type)) {
-      alert(file.name + "은 지원하지 않는 파일 형식이야.");
-      continue;
-    }
-    if (file.size > 15 * 1024 * 1024) {
-      alert(file.name + "은 15MB를 초과했어.");
-      continue;
-    }
-    const duplicate = selectedFiles.some(
-      f => f.name === file.name && f.size === file.size
-    );
-    if (!duplicate) selectedFiles.push(file);
-  }
-
-  fileInput.value = "";
-  renderFiles();
+addButton.addEventListener("click",()=>{
+  input.click();
 });
 
-function renderFiles() {
-  fileList.innerHTML = "";
+input.addEventListener("change",(event)=>{
+  const incoming=Array.from(event.target.files);
+  const allowed=["image/jpeg","image/png","application/pdf"];
+  let added=0;
 
-  if (selectedFiles.length === 0) {
-    fileList.innerHTML = '<p class="hint">선택된 파일이 없어.</p>';
-    return;
+  incoming.forEach(file=>{
+    if(!allowed.includes(file.type)){
+      alert(file.name+" : 지원하지 않는 파일 형식이야.");
+      return;
+    }
+    if(file.size>15*1024*1024){
+      alert(file.name+" : 15MB를 초과했어.");
+      return;
+    }
+    files.push(file);
+    added++;
+  });
+
+  input.value="";
+  renderFiles();
+  if(added>0){
+    result.style.display="none";
   }
+});
 
-  const heading = document.createElement("p");
-  heading.textContent = "선택된 파일 " + selectedFiles.length + "개";
-  fileList.appendChild(heading);
+function renderFiles(){
+  list.innerHTML="";
 
-  selectedFiles.forEach((file, index) => {
-    const item = document.createElement("div");
-    item.className = "file-item";
+  const heading=document.createElement("p");
+  heading.textContent="선택된 파일: "+files.length+"개";
+  list.appendChild(heading);
 
-    const name = document.createElement("span");
-    name.className = "file-name";
-    name.textContent = (file.type === "application/pdf" ? "📕 " : "🖼️ ") + file.name;
+  files.forEach((file,index)=>{
+    const row=document.createElement("div");
+    row.className="file-item";
 
-    const remove = document.createElement("button");
-    remove.className = "remove";
-    remove.textContent = "삭제";
-    remove.addEventListener("click", () => {
-      selectedFiles.splice(index, 1);
+    const name=document.createElement("span");
+    name.className="file-name";
+    name.textContent=(file.type==="application/pdf"?"📕 ":"🖼️ ")+file.name;
+
+    const remove=document.createElement("button");
+    remove.className="remove";
+    remove.textContent="삭제";
+    remove.type="button";
+    remove.onclick=()=>{
+      files.splice(index,1);
       renderFiles();
-    });
+    };
 
-    item.appendChild(name);
-    item.appendChild(remove);
-    fileList.appendChild(item);
+    row.append(name,remove);
+    list.appendChild(row);
   });
 }
 
-document.getElementById("analyzeBtn").addEventListener("click", function() {
-  const grade = document.getElementById("grade").value;
-  const subject = document.getElementById("subject").value;
-  const scope = document.getElementById("scope").value;
+document.getElementById("clearFiles").onclick=()=>{
+  files=[];
+  input.value="";
+  renderFiles();
+  result.style.display="none";
+};
 
-  if (!grade || !subject) {
+document.getElementById("analyzeBtn").onclick=()=>{
+  const grade=document.getElementById("grade").value;
+  const subject=document.getElementById("subject").value;
+
+  if(!grade||!subject){
     alert("학년과 과목을 선택해 줘.");
     return;
   }
 
-  if (selectedFiles.length === 0) {
-    alert("시험지 파일을 하나 이상 선택해 줘.");
+  if(files.length===0){
+    alert("시험지 파일을 추가해 줘.");
     return;
   }
 
-  result.style.display = "block";
-  result.textContent =
-    "업로드 준비 완료! 선택한 파일: " + selectedFiles.length +
-    "개 · 학년: " + grade + " · 과목: " + subject +
-    (scope ? " · 시험 범위: " + scope : "") +
-    ". 실제 AI 분석 기능은 다음 단계에서 연결할 예정이야.";
-});
+  result.style.display="block";
+  result.textContent="파일 "+files.length+"개가 선택됐어. 실제 AI 분석 서버는 아직 연결되지 않았어.";
+};
+
 renderFiles();
 </script>
 </body>
 </html>
+
